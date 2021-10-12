@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Exam</title>
+    <meta name="author" content="Jayant">
+    <meta name="description" content="">
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.0.2/tailwind.min.css" rel="stylesheet">
+    <link href="https://unpkg.com/tailwindcss/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css?family=Karla:400,700&display=swap');
+
+        .font-family-karla {
+            font-family: karla;
+        }
+    </style>
+</head>
+
+
+
+<header class="bg-teal-400">
+    <nav class="flex justify-end w-full bg-purple-500 text-white p-4">
+
+        <div class="md:items-center md:w-auto flex"></div>
+
+        <div class="flex justify-end text-sm" v-else>
+            <div class="flex justify-end ">
+
+                <a class="p-2 ml-2 bg-teal-500 text-gray-100 font-semibold leading-none border border-teal-600 rounded hover:border-transparent hover:bg-teal-600"
+                    href="/">Log Out</a>
+            </div>
+        </div>
+        </div>
+    </nav>
+</header>
+<br>
+<main class="flex justify-center items-center">
+
+    <h1 class="sm:text-4xl text-5xl font-medium title-font mb-2 text-gray-900">View all exam</h1>
+</main>
+<div class="bottomNav fixed bottom-0 w-full">
+    <nav style="border:1px solid blue" class="md:hidden bottom-0 w-full bg-gray-700 text-xs">
+    </nav>
+</div>
+
+
+<body bgcolor="#D3D3D3">
+    <br>
+    <br>
+    <div class="flex justify-around">
+    <input name="field_name" class="border border-2 rounded-r px-4 py-2 " type="text"
+    placeholder="Search Exam Name" />
+    <div class="flex justify-end  ">
+    <a href="/new_exam"><button class="bg-gray-700 hover:bg-blue-light text-white font-bold py-2 px-4 border-b-4 border-gray-dark hover:border-black rounded" type="submit">
+        Create New Exam
+    </button></a>
+</div>
+</div>
+<br>
+<br>
+
+       
+<div class="flex items-center justify-center">
+	<div class="container">
+		<table class="w-full flex flex-row flex-no-wrap sm:bg-white rounded-lg overflow-hidden sm:shadow-lg my-5">
+			<thead class="text-black">
+				<tr class="bg-teal-400 flex flex-col flex-no wrap sm:table-row rounded-l-lg sm:rounded-none mb-2 sm:mb-0">
+					<th class="p-3 text-left">Exam Name</th>
+					<th class="p-3 text-left">Date</th>
+					<th class="p-3 text-left" width="110px">Actions</th>
+				</tr>
+				
+			</thead>
+
+      <%examlist.forEach((exam) => {%>
+			<tbody class="flex-1 sm:flex-none">
+        
+				<tr class="flex flex-col flex-no wrap sm:table-row mb-2 sm:mb-0">
+					<td class="border-grey-light border hover:bg-gray-100 p-3"><%=exam.exam_name%></td>
+					<td class="border-grey-light border hover:bg-gray-100 p-3 truncate"><%=exam.exam_date%></td>
+					<td class="border-grey-light border hover:bg-gray-100 p-3 text-red-400 hover:text-red-600 hover:font-medium cursor-pointer">Delete</td>
+           <td class="border-grey-light border hover:bg-gray-100 p-3 text-red-400 hover:text-red-600 hover:font-medium cursor-pointer"><a href="/view-questions">Edit</a></td>
+          <td class="border-grey-light border hover:bg-gray-100 p-3 text-red-400 hover:text-red-600 hover:font-medium cursor-pointer">
+          <div class="flex justify-center items-center" x-data="{toggle: '0'}">
+            <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.js" defer></script>
+          
+            <div class="relative rounded-full w-12 h-6 transition duration-200 ease-linear"
+                 :class="[toggle === '1' ? 'bg-green-400' : 'bg-gray-400']">
+              <label for="toggle"
+                     class="absolute left-0 bg-white border-2 mb-2 w-6 h-6 rounded-full transition transform duration-100 ease-linear cursor-pointer"
+                     :class="[toggle === '1' ? 'translate-x-full border-green-400' : 'translate-x-0 border-gray-400']"></label>
+              <input type="checkbox" id="toggle" name="toggle"
+                     class="appearance-none w-full h-full active:outline-none focus:outline-none"
+                     @click="toggle === '0' ? toggle = '1' : toggle = '0'"/>
+            </div>
+          </div>
+          </td>
+				</tr>
+        </tbody>
+      <%})%>
+		</table>
+	</div>
+    </div>
+
+
+<style>
+  html,
+  body {
+    height: 100%;
+  }
+
+  @media (min-width: 900px) {
+    table {
+      display: inline-table !important;
+    }
+
+    thead tr:not(:first-child) {
+      display: none;
+    }
+  }
+
+  td:not(:last-child) {
+    border-bottom: 0;
+  }
+
+  th:not(:last-child) {
+    border-bottom: 2px solid rgba(0, 0, 0, .1);
+  }
+</style>
+        
+   
+</body>
+
+</html>

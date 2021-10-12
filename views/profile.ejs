@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile</title>
+    <meta name="author" content="Jayant">
+    <meta name="description" content="">
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.0.2/tailwind.min.css" rel="stylesheet">
+    <link href="https://unpkg.com/tailwindcss/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css?family=Karla:400,700&display=swap');
+
+        .font-family-karla {
+            font-family: karla;
+        }
+    </style>
+</head>
+
+
+
+<header class="bg-teal-400">
+    <nav class="flex justify-end w-full bg-purple-500 text-white p-4">
+
+        <div class="md:items-center md:w-auto flex"></div>
+
+            <div class="flex justify-end text-sm" v-else>
+                <div class="flex justify-end ">
+                  
+                    <a class="p-2 ml-2 bg-teal-500 text-gray-100 font-semibold leading-none border border-teal-600 rounded hover:border-transparent hover:bg-teal-600"
+                        href="/">Log Out</a>
+            </div>
+            </div>
+        </div>
+    </nav>
+</header>
+<br>
+<main class="flex justify-center items-center">
+    
+    <h1 class="sm:text-4xl text-5xl font-medium title-font mb-2 text-gray-900">My Profile</h1>
+</main>
+<div class="flex flex-col justify-center md:justify-start my-auto pt-8 md:pt-0 px-8 md:px-24 lg:px-32">
+<form class="flex flex-col pt-3 md:pt-8"  method ="POST"  >
+    <div class="flex flex-col pt-4">
+        <label for="name" class="text-lg">Name</label>
+        <input type="text" name="name" placeholder="John Smith" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mt-1 leading-tight focus:outline-none focus:shadow-outline" />
+    </div>
+
+    <div class="flex flex-col pt-4">
+        <label for="email" class="text-lg">Email</label>
+        <input type="text" name="email"placeholder="your@email.com" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mt-1 leading-tight focus:outline-none focus:shadow-outline" />
+    </div>
+    <div class="flex flex-col pt-4">
+        <label for="confirm-password" class="text-lg">Mobile Number</label>
+        <input type="text" name="mobile"  placeholder="Mobile Number" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mt-1 leading-tight focus:outline-none focus:shadow-outline" />
+    </div>
+    <div class="flex flex-col pt-4">
+        <label for="confirm-password" class="text-lg">Address</label>
+        <input type="text" name="address"  placeholder="Enter your Address" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mt-1 leading-tight focus:outline-none focus:shadow-outline" />
+    </div>
+    <div class="flex flex-col pt-4">
+        <label for="password" class="text-lg">Old Password</label>
+        <input type="password" name ="old-password"placeholder="Password" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mt-1 leading-tight focus:outline-none focus:shadow-outline" />
+    </div>
+    <div class="flex flex-col pt-4">
+        <label for="password" class="text-lg">New Password</label>
+        <input type="password" name ="password"placeholder="Password" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mt-1 leading-tight focus:outline-none focus:shadow-outline" />
+    </div>
+
+    <div class="flex flex-col pt-4">
+        <label for="confirm-password" class="text-lg">Confirm Password</label>
+        <input type="password" name ="cnfpassword" placeholder="Confirm Your Password" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mt-1 leading-tight focus:outline-none focus:shadow-outline" />
+    </div>
+
+    <input type="submit" value="Save Profile" class="bg-black text-white font-bold text-lg hover:bg-gray-700 p-2 mt-8" />
+</form>
+<br>
+<br>
+</div>
+</body>
+
+</html>

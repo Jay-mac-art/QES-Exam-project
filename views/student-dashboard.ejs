@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QES Student Dashboard</title>
+    <meta name="author" content="Jayant">
+    <meta name="description" content="">
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.0.2/tailwind.min.css" rel="stylesheet">
+    <link href="https://unpkg.com/tailwindcss/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css?family=Karla:400,700&display=swap');
+
+        .font-family-karla {
+            font-family: karla;
+        }
+    </style>
+</head>
+
+
+
+<header class="bg-teal-400">
+    <nav class="flex justify-end w-full bg-purple-500 text-white p-4">
+
+        <div class="md:items-center md:w-auto flex"></div>
+
+            <div class="flex justify-end text-sm" v-else>
+                <div class="flex justify-end ">
+                  
+                    <a class="p-2 ml-2 bg-teal-500 text-gray-100 font-semibold leading-none border border-teal-600 rounded hover:border-transparent hover:bg-teal-600"
+                        href="/">Log Out</a>
+            </div>
+            </div>
+        </div>
+    </nav>
+</header>
+<br>
+<main class="flex justify-center items-center">
+    
+    <h1 class="sm:text-4xl text-5xl font-medium title-font mb-2 text-gray-900">Welcome</h1>
+</main>
+<div class="bottomNav fixed bottom-0 w-full">
+    <nav style="border:1px solid blue" class="md:hidden bottom-0 w-full bg-gray-700 text-xs">
+    </nav>
+</div>
+
+
+<body bgcolor="#D3D3D3">
+    <section class="text-gray-600 body-font">
+        <div class="container px-5 py-24 mx-auto">
+            <div class="flex flex-wrap w-full mb-8">
+                <div class="w-full mb-6 lg:mb-0">
+                    <h2 class="sm:text-4xl text-5xl font-medium title-font mb-2 text-gray-900">Student Dashboard</h1>
+                    <div class="h-1 w-20 bg-indigo-500 rounded"></div>
+                </div>
+            </div>
+            <div class="flex flex-wrap flex justify-around -m-4 text-center">
+                <div class="p-4 sm:w-1/4 w-1/2">
+                    <div class="bg-indigo-500 rounded-lg p-2 xl:p-6">
+                        <a href = "/profile "><h2 class="title-font font-medium sm:text-4xl text-3xl text-white">My Profile</h2></a>
+                        
+                    </div>
+                </div>
+                <div class="p-4 sm:w-1/4 w-1/2">
+                    <div class="bg-indigo-500 rounded-lg p-2 xl:p-6">
+                        <a href = "/ "> <h2 class="title-font font-medium sm:text-4xl text-3xl text-white">Test</h2></a>
+                        
+                    </div>
+                </div>
+                <div class="p-4 sm:w-1/4 w-1/2">
+                    <div class="bg-indigo-500 rounded-lg p-2 xl:p-6">
+                        <h2 class="title-font font-medium sm:text-4xl text-3xl text-white">Results</h2>
+                      
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</body>
+
+</html>

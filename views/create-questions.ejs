@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QES Dashboard</title>
+    <meta name="author" content="Jayant">
+    <meta name="description" content="">
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.0.2/tailwind.min.css" rel="stylesheet">
+    <link href="https://unpkg.com/tailwindcss/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css?family=Karla:400,700&display=swap');
+
+        .font-family-karla {
+            font-family: karla;
+        }
+    </style>
+</head>
+
+
+
+<header class="bg-teal-400">
+    <nav class="flex justify-end w-full bg-purple-500 text-white p-4">
+
+        <div class="md:items-center md:w-auto flex"></div>
+
+        <div class="flex justify-end text-sm" v-else>
+            <div class="flex justify-end ">
+
+                <a class="p-2 ml-2 bg-teal-500 text-gray-100 font-semibold leading-none border border-teal-600 rounded hover:border-transparent hover:bg-teal-600"
+                    href="/">Log Out</a>
+            </div>
+        </div>
+        </div>
+    </nav>
+</header>
+<br>
+<main class="flex justify-center items-center">
+
+    <h1 class="sm:text-4xl text-5xl font-medium title-font mb-2 text-gray-900">Create New Question </h1>
+</main>
+<div class="bottomNav fixed bottom-0 w-full">
+    <nav style="border:1px solid blue" class="md:hidden bottom-0 w-full bg-gray-700 text-xs">
+    </nav>
+</div>
+
+
+<body bgcolor="#D3D3D3">
+    <br>
+    <div class="flex items-center justify-center">
+
+    <h1 class="sm:text-3xl text-5xl font-medium title-font mb-2 text-gray-900"> Questions </h1>
+    </div>
+    <div class="flex items-center justify-center">
+    
+    <br>
+    <form method="POST">
+    <div class="border border-black ">
+    <textarea rows="5" cols="180" id="TITLE" name="question" >
+    </textarea>
+    <br>
+    <br>
+   </div>
+</div>
+<div class="flex items-center justify-center">
+    
+        <span class="text-sm border border-2 rounded-l px-4 py-2 bg-blue-300 whitespace-no-wrap">Option 1:</span>
+        <input name="option1" class="border border-2 rounded-r px-4 py-2 "  placeholder="Write Options" />
+        <br>
+        <span class="text-sm border border-2 rounded-l px-4 py-2 bg-blue-300 whitespace-no-wrap">Option 2:</span>
+        <input name="option2" class="border border-2 rounded-r px-4 py-2 " placeholder="Write Options" />
+        <br>
+        <span class="text-sm border border-2 rounded-l px-4 py-2 bg-blue-300 whitespace-no-wrap">Option 3:</span>
+        <input name="option3" class="border border-2 rounded-r px-4 py-2 "  placeholder="Write Options" />
+        <br>
+        <span class="text-sm border border-2 rounded-l px-4 py-2 bg-blue-300 whitespace-no-wrap">Option 4:</span>
+        <input name="option4" class="border border-2 rounded-r px-4 py-2 "  placeholder="Write Options" />
+</div>
+
+<br>
+<br>
+<div class="flex items-center justify-center">
+
+<label for="answer">Choose Correct Option</label>
+
+            <select id="optiond" name="answer">
+              <option value="Option_1">Option 1</option>
+              <option value="Option_2">Option 2</option>
+              <option value="Option_3">Option 3</option>
+              <option value="Option_4">Option 4</option>
+            </select>
+
+</div>
+<br>
+<br>
+<div class="flex  justify-around">
+
+    <button class="px-4 py-2 rounded text-white inline-block shadow-lg bg-blue-500 hover:bg-blue-600 focus:bg-blue-700" type="submit">Add this Questions</button>
+    <button class="px-4 py-2 rounded text-white inline-block shadow-lg bg-blue-500 hover:bg-blue-600 focus:bg-blue-700" type="button">Cancel</button>
+  
+</div>
+</form>
+</body>
+
+</html>

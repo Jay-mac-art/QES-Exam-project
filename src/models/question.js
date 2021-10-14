@@ -7,11 +7,7 @@ const questionSchema = new mongoose.Schema({
         auto: true
 
     },
-    user_id : {
-        type: mongoose.Types.ObjectId,
-        required: true,
-        auto: true
-    },
+
     question : {
         type: String,
         required: true,

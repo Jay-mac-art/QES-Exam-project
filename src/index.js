@@ -3,7 +3,8 @@ const profile = require('./models/profile.js')
 const Question = require('./models/question.js')
 const exam = require('./models/exams.js')
 const db = require('mongodb')
-const session = require('express-session')
+const cookieParser = require('cookie-parser');
+const session = require('express-session');
 const app = express()
 const ejs = require('ejs')
 const bcrypt = require('bcrypt')
@@ -14,13 +15,16 @@ const path = require('path')
 const { sendOtpMail, otp } = require('./email/account')
 const bodyParser = require('body-parser')
 const router = require('./routers/profiles')
+
 const port = process.env.PORT || 3000
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-
-
+console.log(path.join(__dirname, '../public'))
+app.use('/static', express.static(path.join(__dirname, 'public')))
 app.set('views', path.join(__dirname, '../views'))
+
+
 app.set('views engine', 'ejs')
 app.use(session({
     secret: ' my secret key',
@@ -33,6 +37,7 @@ app.use(session({
 
 app.get('/', async (req, res) => {
     res.render('login.ejs')
+
 })
 app.post('/', (req, res) => {
 
@@ -43,13 +48,26 @@ app.post('/', (req, res) => {
             console.log('user not in database')
             res.send("User not exists").status(201)
         }
-        else if (user.admin == true)
-        {
-            res.redirect('/dashboard')
+        else if (user.admin == true) {
+            req.session.userId = user._id;
+            req.session.userType = "Admin";
+            console.log("session", req.session)
+            if (req.session.userId) {
+                res.redirect('/dashboard')
+            } else {
+                res.redirect('/');
+            }
+            
         }
-        else
-        {
-            res.redirect('/student-dashboard')
+        else {
+            req.session.userId = user._id;
+            req.session.userType = "Student";
+            if (req.session.userId) {
+                res.redirect('/student-dashboard')
+            } else {
+                res.redirect('/');
+            }
+            
         }
     })
 
@@ -95,65 +113,82 @@ app.post('/profile', (req, res) => {
         else {
             console.log("Updated");
         }
-       
-    if (cnfpass === req.body.password) {
 
-         if (user.admin == true)
-        {
-            res.redirect('/dashboard')
+        if (cnfpass === req.body.password) {
+
+            if (user.admin == true) {
+                res.redirect('/dashboard')
+            }
+            else {
+                res.redirect('/student-dashboard')
+            }
+
         }
-        else
-        {
-            res.redirect('/student-dashboard')
+        else {
+            res.send("password and confirm password should be same")
         }
-        
-    }
-    else {
-        res.send("password and confirm password should be same")
-    }
 
     });
 
-    
+
 })
 
 app.post('/questions', (req, res) => {
-const qus = new Question({
-    question: req.body.question,
-    option_1: req.body.option1,
-    option_2: req.body.option2,
-    option_3: req.body.option3,
-    option_4: req.body.option4,
-    answer : req.body.answer
-})
-qus.save().then(() => {
+    const qus = new Question({
+        question: req.body.question,
+        option_1: req.body.option1,
+        option_2: req.body.option2,
+        option_3: req.body.option3,
+        option_4: req.body.option4,
+        answer: req.body.answer
+    })
+    qus.save().then(() => {
 
-    res.redirect('/view-questions')
+        res.redirect('/view-questions')
 
-}).catch((e) => {
-    console.log(e)
-    res.send(e)
+    }).catch((e) => {
+        console.log(e)
+        res.send(e)
 
-})
+    })
 })
 
 app.get('/dashboard', (req, res) => {
-    res.render('dashbord.ejs')
+    if (req.session.userId) {
+        res.render('dashbord.ejs')
+    } else {
+        res.redirect('/');
+    }
 })
 app.get('/profile', (req, res) => {
-    res.render('profile.ejs')
+    if (req.session.userId) {
+        res.render('profile.ejs')
+    } else {
+        res.redirect('/');
+    }
+    
 })
 app.get('/student-dashboard', (req, res) => {
-    res.render('student-dashboard.ejs')
+    if (req.session.userId) {
+        res.render('student-dashboard.ejs')
+    } else {
+        res.redirect('/');
+    }
+   
 })
 app.get('/students', (req, res) => {
-    profile.find({admin : false}, (error, user) => {
+    if (req.session.userId) {
+        profile.find({ admin: false }, (error, user) => {
 
 
-        res.render('Students.ejs', { userlist: user })
-
-
-    })
+            res.render('Students.ejs', { userlist: user })
+    
+    
+        })
+    } else {
+        res.redirect('/');
+    }
+    
 
 
 })
@@ -168,27 +203,74 @@ app.get('/forgot', (req, res) => {
 })
 
 app.get('/exam', (req, res) => {
-    exam.find({}, (error, exam) => {
-        console.log(exam)
-    res.render('create-exam.ejs',{ examlist: exam })
-})
+    if (req.session.userId) {
+        exam.find({is_deleted : false}, (error, exam) => {
+            
+            res.render('create-exam.ejs', { examlist: exam })
+        })
+    } else {
+        res.redirect('/');
+    }
+    
 })
 app.get('/new_exam', (req, res) => {
-    res.render('create-new-exam.ejs')
+    if (req.session.userId) {
+        res.render('create-new-exam.ejs')
+    } else {
+        res.redirect('/');
+    }
+   
+    
 })
 app.get('/questions', (req, res) => {
+    if (req.session.userId) {
+        res.render('create-questions.ejs')
+    } else {
+        res.redirect('/');
+    }
+    
+})
+app.get('/test', async (req, res) => {
+    if (req.session.userId) {
+        res.render('index.ejs')
+    } else {
+        res.redirect('/');
+    }
+    
+})
+app.post('/test', (req, res) => {
+    if (req.session.userId) {
+        Question.find({}, (error, qus) => {
 
-    res.render('create-questions.ejs',)
+            console.log(qus)
+            res.render('index.ejs', qus)
+       
+        })
+    } else {
+        res.redirect('/');
+    }
+    
+
 })
 app.get('/edit-question', (req, res) => {
-    res.render('edit-questions.ejs')
+    if (req.session.userId) {
+        res.render('edit-questions.ejs')
+    } else {
+        res.redirect('/');
+    }
+    
 })
 app.get('/view-questions', (req, res) => {
-    res.render('view-all-question.ejs')
+    if (req.session.userId) {
+        res.render('view-all-question.ejs')
+    } else {
+        res.redirect('/');
+    }
+    
 })
 
 app.post('/forgot', async (req, res) => {
-    console.log("dwa", req.body)
+    
     let email = req.body.email;
     console.log("vszwa", email)
     const user = await profile.findOne({ email: email })
@@ -204,30 +286,40 @@ app.post('/forgot', async (req, res) => {
 
 app.post('/new_exam', (req, res) => {
 
-    const Exam = new exam({
-        exam_name: req.body.name,
-        exam_date: req.body.date.toString()
-
-    })
-    Exam.save().then(() => {
-
-        res.redirect('/exam')
-
-    }).catch((e) => {
-        console.log(e)
-        res.send(e)
-
-    })
+    if (req.session.userId) {
+        const Exam = new exam({
+            exam_name: req.body.name,
+            exam_date: req.body.date.toString()
+    
+        })
+        Exam.save().then(() => {
+    
+            res.redirect('/exam')
+    
+        }).catch((e) => {
+            console.log(e)
+            res.send(e)
+    
+        })
+    } else {
+        res.redirect('/');
+    }
+    
+    
 })
 
-
-
-app.post('/otp', async (req, res) => {
-    const user = await profile.findOne({ email: req.body.user - email })
-
-
-
+app.post('/otp', (req, res) => {
+    profile.findOne({ email: req.body.user-email }, (err, user) => {
+        res.send(user)
+    })
 })
+app.post('/logout', (req, res) => {
+    req.session.destroy((err) => {
+        res.redirect('/') 
+      })
+     
+    
+    })
 app.use(router)
 app.listen(port, () => {
     console.log(`Port is set on  ${port} `)

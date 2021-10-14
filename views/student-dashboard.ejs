@@ -29,8 +29,10 @@
             <div class="flex justify-end text-sm" v-else>
                 <div class="flex justify-end ">
                   
-                    <a class="p-2 ml-2 bg-teal-500 text-gray-100 font-semibold leading-none border border-teal-600 rounded hover:border-transparent hover:bg-teal-600"
-                        href="/">Log Out</a>
+                    <form method="POST" action="/logout">
+                        <button name="signout" class="p-2 ml-2 bg-teal-500 text-gray-100 font-semibold leading-none border border-teal-600 rounded hover:border-transparent hover:bg-teal-600"
+                            type="submit">Log Out</button>
+                        </form>
             </div>
             </div>
         </div>
@@ -65,7 +67,7 @@
                 </div>
                 <div class="p-4 sm:w-1/4 w-1/2">
                     <div class="bg-indigo-500 rounded-lg p-2 xl:p-6">
-                        <a href = "/ "> <h2 class="title-font font-medium sm:text-4xl text-3xl text-white">Test</h2></a>
+                        <a href = "/Test "> <h2 class="title-font font-medium sm:text-4xl text-3xl text-white">Test</h2></a>
                         
                     </div>
                 </div>

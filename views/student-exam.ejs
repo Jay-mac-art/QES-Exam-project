@@ -52,43 +52,6 @@
 <body bgcolor="#D3D3D3">
   <br>
   <br>
-  <form method="POST" action="/exam">
-    <div class="flex justify-around">
-      <div class="flex">
-        <button class="text-sm border border-2 rounded-l px-4 py-2 bg-gray-300 whitespace-no-wrap" type="submit">Delete
-          Exam</button>
-        <input name="Exam_name" class="border border-2 rounded-r px-4 py-2 w" type="text" placeholder="Exam Name" />
-      </div>
-  </form>
- 
-    <button
-      class="bg-gray-700 hover:bg-blue-light text-white font-bold py-2 px-4 border-b-4 border-gray-dark hover:border-black rounded"
-      type="submit"><a href="/new_exam">
-      Create New Exam</a>
-    </button>
-
-
-  <form method="POST" action="/abc">
-    <div class="flex">
-      <button for="answer" class="text-sm border border-2 rounded-l px-4 py-2 bg-gray-300 whitespace-no-wrap"
-        type="submit">Status &nbsp</button>
-      <select id="optiond" name="status">
-        <option value="true">Activate</option>
-        <option value="false">Deactivate</option>
-      </select>
-      <input name="S_name" class="border border-2 rounded-r px-3 py-2 " type="text" placeholder=" Exam Name" />
-    </div>
-  </form>
-  <form method="GET" action="/view-questions">
-    <div class="flex">
-      <button  class="text-sm border border-2 rounded-l px-4 py-2 bg-gray-300 whitespace-no-wrap"
-        type="submit"><a href="/view-questions" >Edit Exam &nbsp </a></button>
-
-      <input name="E_name" class="border border-2 rounded-r px-3 py-2 " type="text" placeholder=" Exam Name" />
-
-    </div>
-  </form>
-  </div>
   <br>
   <br>
 
@@ -154,7 +117,14 @@
     }
   </style>
 
-
+<form method="POST" >
+    <div class="flex justify-around">
+      <div class="flex">
+        <button class="text-sm border border-2 rounded-l px-4 py-2 bg-gray-300 whitespace-no-wrap" type="submit">Take
+          Exam</button>
+        <input name="Exam_name" class="border border-2 rounded-r px-4 py-2 w" type="text" placeholder="Exam Name" />
+      </div>
+  </form>
 </body>
 
 </html>

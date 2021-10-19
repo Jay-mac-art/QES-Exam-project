@@ -2,7 +2,6 @@ const express = require('express')
 const profile = require('./models/profile.js')
 const Question = require('./models/question.js')
 const exam = require('./models/exams.js')
-const db = require('mongodb')
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
 const app = express()
@@ -57,7 +56,7 @@ app.post('/', (req, res) => {
             } else {
                 res.redirect('/');
             }
-            
+
         }
         else {
             req.session.userId = user._id;
@@ -67,7 +66,7 @@ app.post('/', (req, res) => {
             } else {
                 res.redirect('/');
             }
-            
+
         }
     })
 
@@ -166,7 +165,7 @@ app.get('/profile', (req, res) => {
     } else {
         res.redirect('/');
     }
-    
+
 })
 app.get('/student-dashboard', (req, res) => {
     if (req.session.userId) {
@@ -174,7 +173,7 @@ app.get('/student-dashboard', (req, res) => {
     } else {
         res.redirect('/');
     }
-   
+
 })
 app.get('/students', (req, res) => {
     if (req.session.userId) {
@@ -182,13 +181,13 @@ app.get('/students', (req, res) => {
 
 
             res.render('Students.ejs', { userlist: user })
-    
-    
+
+
         })
     } else {
         res.redirect('/');
     }
-    
+
 
 
 })
@@ -204,14 +203,14 @@ app.get('/forgot', (req, res) => {
 
 app.get('/exam', (req, res) => {
     if (req.session.userId) {
-        exam.find({is_deleted : false}, (error, exam) => {
-            
+        exam.find({ is_deleted: false }, (error, exam) => {
+
             res.render('create-exam.ejs', { examlist: exam })
         })
     } else {
         res.redirect('/');
     }
-    
+
 })
 app.get('/new_exam', (req, res) => {
     if (req.session.userId) {
@@ -219,8 +218,8 @@ app.get('/new_exam', (req, res) => {
     } else {
         res.redirect('/');
     }
-   
-    
+
+
 })
 app.get('/questions', (req, res) => {
     if (req.session.userId) {
@@ -228,15 +227,46 @@ app.get('/questions', (req, res) => {
     } else {
         res.redirect('/');
     }
-    
+
 })
 app.get('/test', async (req, res) => {
     if (req.session.userId) {
-        res.render('index.ejs')
+        Question.find({ is_deleted: false }, (err, qus) => {
+            let qes = []
+
+            qus.forEach((Qust) => {
+
+                qes[num] = [
+                    {
+                        numb: num,
+                        question: Qust.question,
+                        answer: Qust.answer,
+                        options: [
+                            Qust.option_1,
+                            Qust.option_2,
+                            Qust.option_3,
+                            Qust.option_4
+
+                        ]
+                    }
+
+                ];
+
+                num++
+
+            })
+            if (err) {
+                console.log(err)
+            }
+            res.render('index.ejs', qes)
+            console.log(qes)
+            return qes
+        })
+
     } else {
         res.redirect('/');
     }
-    
+
 })
 app.post('/test', (req, res) => {
     if (req.session.userId) {
@@ -244,12 +274,12 @@ app.post('/test', (req, res) => {
 
             console.log(qus)
             res.render('index.ejs', qus)
-       
+
         })
     } else {
         res.redirect('/');
     }
-    
+
 
 })
 app.get('/edit-question', (req, res) => {
@@ -258,7 +288,7 @@ app.get('/edit-question', (req, res) => {
     } else {
         res.redirect('/');
     }
-    
+
 })
 app.get('/view-questions', (req, res) => {
     if (req.session.userId) {
@@ -266,11 +296,11 @@ app.get('/view-questions', (req, res) => {
     } else {
         res.redirect('/');
     }
-    
+
 })
 
 app.post('/forgot', async (req, res) => {
-    
+
     let email = req.body.email;
     console.log("vszwa", email)
     const user = await profile.findOne({ email: email })
@@ -290,36 +320,51 @@ app.post('/new_exam', (req, res) => {
         const Exam = new exam({
             exam_name: req.body.name,
             exam_date: req.body.date.toString()
-    
+
         })
         Exam.save().then(() => {
-    
+
             res.redirect('/exam')
-    
+
         }).catch((e) => {
             console.log(e)
             res.send(e)
-    
+
         })
     } else {
         res.redirect('/');
     }
-    
-    
+
+
 })
 
 app.post('/otp', (req, res) => {
-    profile.findOne({ email: req.body.user-email }, (err, user) => {
+    profile.findOne({ email: req.body.user - email }, (err, user) => {
         res.send(user)
     })
 })
 app.post('/logout', (req, res) => {
     req.session.destroy((err) => {
-        res.redirect('/') 
-      })
-     
-    
+        res.redirect('/')
     })
+
+
+})
+
+
+
+
+app.get('/StudentExam', (req, res) => {
+    //if (req.session.userId) {
+        exam.find({ is_deleted: false , exam_status : true }, (error, exam) => {
+
+            res.render('Student-exam.ejs', { examlist: exam })
+        })
+    //} else {
+      //  res.redirect('/');
+   // }
+
+})
 app.use(router)
 app.listen(port, () => {
     console.log(`Port is set on  ${port} `)

@@ -7,7 +7,7 @@
  const exam = require('../models/exams.js')
 
 router.post('/exam', (req, res) => {
-    console.log( req.body.Exam_name)
+    
    
     exam.findOneAndUpdate({ is_deleted : false , exam_name : req.body.Exam_name},{$set : {is_deleted : true}},{ new: true } ,(err, user) => {
         
@@ -34,9 +34,18 @@ router.post('/abc', (req, res) => {
 //         res.render('view-questions', qus)
 //     })
 // })
-
+router.get('/Test1',(req, res) => {
+res.render('mcq-front.ejs')
+})
      
 
+router.get('/StudentExam',(req, res) => {
+    res.render('Student-exam.ejs')
+    })
 
+    router.get('/MCQ',(req, res) => {
+        res.render('MCQ.ejs')
+        })
+               
 
  module.exports = router

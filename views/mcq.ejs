@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Create Exam</title>
+  <meta name="author" content="Jayant">
+  <meta name="description" content="">
+
+  </head>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.0.2/tailwind.min.css" rel="stylesheet">
+  <link href="https://unpkg.com/tailwindcss/dist/tailwind.min.css" rel="stylesheet">
+  <style>
+    @import url('https://fonts.googleapis.com/css?family=Karla:400,700&display=swap');
+
+    .font-family-karla {
+      font-family: karla;
+    }
+  </style>
+<body>
+<header class="bg-teal-400">
+    <nav class="flex justify-end w-full bg-purple-500 text-white p-4">
+  
+      <div class="md:items-center md:w-auto flex"></div>
+  
+      <div class="flex justify-end text-sm" v-else>
+        <div class="flex justify-end ">
+  
+          <form method="POST" action="/logout">
+            <button name="signout" class="p-2 ml-2 bg-teal-500 text-gray-100 font-semibold leading-none border border-teal-600 rounded hover:border-transparent hover:bg-teal-600"
+                type="submit">Log Out</button>
+            </form>
+        </div>
+      </div>
+      </div>
+    </nav>
+  </header>
+  <br>
+  <main class="flex justify-center items-center">
+  
+    <h1 class="sm:text-4xl text-5xl font-medium title-font mb-2 text-gray-900">View all exam</h1>
+  </main>
+  <div class="bottomNav fixed bottom-0 w-full">
+    <nav style="border:1px solid blue" class="md:hidden bottom-0 w-full bg-gray-700 text-xs">
+    </nav>
+  </div>
+
+
+
+
+
+    <div class="flex justify-center">
+      <div class="h-auto py-20 px-10 w-full bg-indigo-500 flex flex-col space-y-5 mx-auto rounded-3xl shadow-xl hover:rotate-1 transition-transform">
+      <h1 class=" font-medium text-white text-2xl tracking-wide">Some Rules of this Quiz</h1>
+      <label class="flex radio p-2 cursor-pointer">
+        <input class="my-auto transform scale-125" type="radio" name="sfg" />
+        <div class="title px-2">male</div>
+      </label>
+    
+      <label class="flex radio p-2 cursor-pointer">
+        <input class="my-auto transform scale-125" type="radio" name="sfg" />
+        <div class="title px-2">female</div>
+      </label>
+    
+      <label class="flex radio p-2 cursor-pointer">
+        <input class="my-auto transform scale-125" type="radio" name="sfg" />
+        <div class="title px-2">gay</div>
+      </label>
+    
+      <label class="flex radio p-2 cursor-pointer">
+        <input class="my-auto transform scale-125" type="radio" name="sfg" />
+        <div class="title px-2">lesbian</div>
+      </label>
+      <div class="flex items-center justify-between">
+        <button class="px-4 py-2 rounded text-white inline-block shadow-lg bg-blue-500 hover:bg-blue-600 focus:bg-blue-700" type="submit">Exit</button>
+        <button class="px-4 py-2 rounded text-white inline-block shadow-lg bg-blue-500 hover:bg-blue-600 focus:bg-blue-700" type="submit">Continue</button>
+      </div>
+</div>
+  </body>
+  </html>

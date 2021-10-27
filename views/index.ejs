@@ -105,18 +105,26 @@
                                 <br>
                                 <br>
     </form>
-
+    <% var answer = answer%>
+    <h1><%-answer[1]%></h1>
     <script>
         var marks = 0
+        var num = "<%= quslist.length %>"
+        var quslist = []
+        quslist = <%- JSON.parse(answer) %>
+        
+
+        console.log(quslist,"gfjh")
+
         var form = document.querySelector("form")
         form.addEventListener("submit", function (event) {
-            for(var i = 1 ;i<= '<%-num%>';i++)
+            for(var i = 1 ;i<= num;i++)
             {
                 var radioame = 'sfg'+i
                 var ele = document.getElementsByName(radioame)
                 for(var j=1;j<=ele.length;j++)
                 {
-                    if(ele[j].checked == '<%-Q.answer%>')
+                    if(ele[j].checked == quslist[j].answer)
                     {
                         marks+=1
                         return marks

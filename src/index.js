@@ -239,9 +239,15 @@ app.get('/test', async (req, res) => {
    // if (req.session.userId) {
         Question.find({ is_deleted: false }, (err, qus) => {
            
-            console.log(qus)
+            console.log(qus[1],"gfsg")
            
-            res.render('index.ejs', {quslist : qus})
+           
+           var answer = []
+           qus.forEach(element => {
+               answer.push(element.answer)
+           });
+           console.log(answer,"dghg")
+            res.render('index.ejs', {quslist : qus,answer})
             if (err) {
                 res.send(err)
             }

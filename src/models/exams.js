@@ -3,7 +3,7 @@ const mongoose = require('mongoose')
 const examSchema = new mongoose.Schema({
     user_id : {
         type: mongoose.Types.ObjectId,
-        auto : true 
+        
 
     },
     exam_name: {

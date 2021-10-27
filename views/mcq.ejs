@@ -46,16 +46,16 @@
     </nav>
   </div>
 
+ 
 
-
-
+ 
 
     <div class="flex justify-center">
       <div class="h-auto py-20 px-10 w-full bg-indigo-500 flex flex-col space-y-5 mx-auto rounded-3xl shadow-xl hover:rotate-1 transition-transform">
-      <h1 class=" font-medium text-white text-2xl tracking-wide">Some Rules of this Quiz</h1>
+      <h1 class=" font-medium text-white text-2xl tracking-wide">wrw</h1>
       <label class="flex radio p-2 cursor-pointer">
         <input class="my-auto transform scale-125" type="radio" name="sfg" />
-        <div class="title px-2">male</div>
+        <div class="title px-2">k.hkl</div>
       </label>
     
       <label class="flex radio p-2 cursor-pointer">
@@ -77,5 +77,12 @@
         <button class="px-4 py-2 rounded text-white inline-block shadow-lg bg-blue-500 hover:bg-blue-600 focus:bg-blue-700" type="submit">Continue</button>
       </div>
 </div>
+<%quslist.forEach((Q) => {%>
+    
+  <button><%- Q.question %></button>
+  
+  
+
+<%})%>
   </body>
   </html>

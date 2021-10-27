@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edit Questions</title>
+    <title>QES Dashboard</title>
     <meta name="author" content="Jayant">
     <meta name="description" content="">
 
@@ -41,7 +41,7 @@
 <br>
 <main class="flex justify-center items-center">
 
-    <h1 class="sm:text-4xl text-5xl font-medium title-font mb-2 text-gray-900">Edit the selected Question </h1>
+    <h1 class="sm:text-4xl text-5xl font-medium title-font mb-2 text-gray-900">Edit Question </h1>
 </main>
 <div class="bottomNav fixed bottom-0 w-full">
     <nav style="border:1px solid blue" class="md:hidden bottom-0 w-full bg-gray-700 text-xs">
@@ -58,8 +58,11 @@
     <div class="flex items-center justify-center">
     
     <br>
+    <form method="POST">
+        <span class="text-sm border border-2 rounded-l px-4 py-2 bg-blue-300 whitespace-no-wrap">Question No.</span>
+        <input name="No" class="border border-2 rounded-r px-4 py-2 "  placeholder="Question Sequence" />
     <div class="border border-black ">
-    <textarea rows="5" cols="180" id="TITLE" >
+    <textarea rows="5" cols="180" id="TITLE" name="question" >
     </textarea>
     <br>
     <br>
@@ -68,40 +71,41 @@
 <div class="flex items-center justify-center">
     
         <span class="text-sm border border-2 rounded-l px-4 py-2 bg-blue-300 whitespace-no-wrap">Option 1:</span>
-        <input name="field_name" class="border border-2 rounded-r px-4 py-2 " type="text" placeholder="Write Options" />
+        <input name="option1" class="border border-2 rounded-r px-4 py-2 "  placeholder="Write Options" />
         <br>
         <span class="text-sm border border-2 rounded-l px-4 py-2 bg-blue-300 whitespace-no-wrap">Option 2:</span>
-        <input name="field_name" class="border border-2 rounded-r px-4 py-2 " type="text" placeholder="Write Options" />
+        <input name="option2" class="border border-2 rounded-r px-4 py-2 " placeholder="Write Options" />
         <br>
         <span class="text-sm border border-2 rounded-l px-4 py-2 bg-blue-300 whitespace-no-wrap">Option 3:</span>
-        <input name="field_name" class="border border-2 rounded-r px-4 py-2 " type="text" placeholder="Write Options" />
+        <input name="option3" class="border border-2 rounded-r px-4 py-2 "  placeholder="Write Options" />
         <br>
         <span class="text-sm border border-2 rounded-l px-4 py-2 bg-blue-300 whitespace-no-wrap">Option 4:</span>
-        <input name="field_name" class="border border-2 rounded-r px-4 py-2 " type="text" placeholder="Write Options" />
+        <input name="option4" class="border border-2 rounded-r px-4 py-2 "  placeholder="Write Options" />
 </div>
 
 <br>
 <br>
 <div class="flex items-center justify-center">
-<form method="POST">
+
 <label for="answer">Choose Correct Option</label>
 
-            <select id="optiond">
-              <option value="Option 1">Option 1</option>
-              <option value="Option 2">Option 2</option>
-              <option value="Option 3">Option 3</option>
-              <option value="Option 4">Option 4</option>
+            <select id="optiond" name="answer">
+              <option value="Option_1">Option 1</option>
+              <option value="Option_2">Option 2</option>
+              <option value="Option_3">Option 3</option>
+              <option value="Option_4">Option 4</option>
             </select>
-</form>
+
 </div>
 <br>
 <br>
 <div class="flex  justify-around">
 
-    <button class="px-4 py-2 rounded text-white inline-block shadow-lg bg-blue-500 hover:bg-blue-600 focus:bg-blue-700" type="submit">Edit Questions</button>
+    <button class="px-4 py-2 rounded text-white inline-block shadow-lg bg-blue-500 hover:bg-blue-600 focus:bg-blue-700" type="submit">Add this Questions</button>
     <button class="px-4 py-2 rounded text-white inline-block shadow-lg bg-blue-500 hover:bg-blue-600 focus:bg-blue-700" type="button">Cancel</button>
   
 </div>
+</form>
 </body>
 
 </html>

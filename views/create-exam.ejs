@@ -42,6 +42,11 @@
 <main class="flex justify-center items-center">
 
   <h1 class="sm:text-4xl text-5xl font-medium title-font mb-2 text-gray-900">View all exam</h1>
+  <% if(examlist == [] ) { %>
+    <div class="flex justify-center">
+      <h1 class="sm:text-4xl text-5xl font-medium title-font mb-2 text-gray-900">No Exam Found , Please create New Exam!</h1>
+  </div> 
+  <% } %>
 </main>
 <div class="bottomNav fixed bottom-0 w-full">
   <nav style="border:1px solid blue" class="md:hidden bottom-0 w-full bg-gray-700 text-xs">
@@ -82,7 +87,7 @@
   <form method="GET" action="/view-questions">
     <div class="flex">
       <button  class="text-sm border border-2 rounded-l px-4 py-2 bg-gray-300 whitespace-no-wrap"
-        type="submit"><a href="/view-questions" >Edit Exam &nbsp </a></button>
+        type="submit">Edit Exam &nbsp </button>
 
       <input name="E_name" class="border border-2 rounded-r px-3 py-2 " type="text" placeholder=" Exam Name" />
 
@@ -105,6 +110,8 @@
           </tr>
 
         </thead>
+        
+        <% if(examlist) { %>
 
         <%examlist.forEach((exam)=> {%>
           <tbody class="flex-1 sm:flex-none">
@@ -124,6 +131,7 @@
             </tr>
           </tbody>
           <%})%>
+          <% } %>
       </table>
     </div>
   </div>

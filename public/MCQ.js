@@ -1,12 +1,10 @@
 require('../src/db/mongoose')
 const Question = require('../src/models/question')
 let num = 0
-let questions = []
+function mcq() {
 Question.find({is_deleted : false},(err,qus)=>{
-        let qes = []
-      
+    let qes = []
        qus.forEach((Qust) => {
-        
        qes[num] = [
         {
         numb: num,
@@ -19,26 +17,25 @@ Question.find({is_deleted : false},(err,qus)=>{
           Qust.option_4
         
         ]
+
       }
       
       ];
       
       num++
-      
     })
-    
-    console.log(questions)
-    
-    
+  
       if(err){
           console.log(err)
       }
-      console.log(qes)
-      return qes
-      module.exports = qes
+      //console.log()
+      module.exports = {qes}
     })
+}
     
-   
+    
+
+mcq()
     
  
  

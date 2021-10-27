@@ -9,6 +9,7 @@ const ejs = require('ejs')
 const bcrypt = require('bcrypt')
 require('dotenv/config')
 require('./db/mongoose')
+const md5 = require('crypto-md5');
 const otpGenerator = require('otp-generator')
 const path = require('path')
 const { sendOtpMail, otp } = require('./email/account')
@@ -41,7 +42,7 @@ app.get('/', async (req, res) => {
 app.post('/', (req, res) => {
 
 
-    profile.findOne({ email: req.body.email, password: req.body.password }, (error, user) => {
+    profile.findOne({ email: req.body.email, password: '@'+md5(req.body.password) }, (error, user) => {
         console.log(user)
         if (user == null) {
             console.log('user not in database')
@@ -83,7 +84,7 @@ app.post('/register', (req, res) => {
         email: req.body.email,
         mobile: req.body.mobile,
         address: req.body.address,
-        password: req.body.password
+        password: '@'+md5(req.body.password)
     })
     const cnfpass = req.body.cnfpass
     if (cnfpass === req.body.password) {
@@ -133,16 +134,21 @@ app.post('/profile', (req, res) => {
 })
 
 app.post('/questions', (req, res) => {
+    var num = 0
+    console.log(req.query.E_name)
     const qus = new Question({
         question: req.body.question,
         option_1: req.body.option1,
         option_2: req.body.option2,
         option_3: req.body.option3,
         option_4: req.body.option4,
-        answer: req.body.answer
+        answer: req.body.answer,
+        No :  req.body.No,
+        exam_name : req.query.E_name
+      
     })
     qus.save().then(() => {
-
+    num=num+1
         res.redirect('/view-questions')
 
     }).catch((e) => {
@@ -221,67 +227,47 @@ app.get('/new_exam', (req, res) => {
 
 
 })
-app.get('/questions', (req, res) => {
-    if (req.session.userId) {
-        res.render('create-questions.ejs')
-    } else {
-        res.redirect('/');
-    }
+ app.get('/questions', (req, res) => {
+     if (req.session.userId) {
+         res.render('create-questions.ejs')
+     } else {
+         res.redirect('/');
+     }
 
-})
+ })
 app.get('/test', async (req, res) => {
-    if (req.session.userId) {
+   // if (req.session.userId) {
         Question.find({ is_deleted: false }, (err, qus) => {
-            let qes = []
-
-            qus.forEach((Qust) => {
-
-                qes[num] = [
-                    {
-                        numb: num,
-                        question: Qust.question,
-                        answer: Qust.answer,
-                        options: [
-                            Qust.option_1,
-                            Qust.option_2,
-                            Qust.option_3,
-                            Qust.option_4
-
-                        ]
-                    }
-
-                ];
-
-                num++
-
-            })
-            if (err) {
-                console.log(err)
-            }
-            res.render('index.ejs', qes)
-            console.log(qes)
-            return qes
-        })
-
-    } else {
-        res.redirect('/');
-    }
-
-})
-app.post('/test', (req, res) => {
-    if (req.session.userId) {
-        Question.find({}, (error, qus) => {
-
+           
             console.log(qus)
-            res.render('index.ejs', qus)
-
+           
+            res.render('index.ejs', {quslist : qus})
+            if (err) {
+                res.send(err)
+            }
+           
+            
         })
-    } else {
-        res.redirect('/');
-    }
 
+   // } else {
+     //   res.redirect('/');
+   // }
 
 })
+// app.post('/test', (req, res) => {
+//     if (req.session.userId) {
+//         Question.find({}, (error, qus) => {
+
+//             console.log(qus)
+//             res.render('index.ejs', qus)
+
+//         })
+//     } else {
+//         res.redirect('/');
+//     }
+
+
+//})
 app.get('/edit-question', (req, res) => {
     if (req.session.userId) {
         res.render('edit-questions.ejs')
@@ -292,7 +278,20 @@ app.get('/edit-question', (req, res) => {
 })
 app.get('/view-questions', (req, res) => {
     if (req.session.userId) {
-        res.render('view-all-question.ejs')
+        console.log(req.query.E_name)
+        
+        Question.find({ is_deleted: false }, (err, qus) => {
+           
+           
+          
+            res.render('view-all-question.ejs', {quslist : qus, Ename : req.query.E_name})
+            if (err) {
+                res.send(err)
+            }
+           
+            
+        })
+       
     } else {
         res.redirect('/');
     }
@@ -319,6 +318,7 @@ app.post('/new_exam', (req, res) => {
     if (req.session.userId) {
         const Exam = new exam({
             exam_name: req.body.name,
+            
             exam_date: req.body.date.toString()
 
         })

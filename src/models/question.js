@@ -1,11 +1,14 @@
 const mongoose = require('mongoose')
 
 const questionSchema = new mongoose.Schema({
-    exam_id : {
-        type: mongoose.Types.ObjectId,
-        required: true,
-        auto: true
-
+   
+    No : { 
+        type: Number, 
+        default: 0 
+    },
+    exam_name : {
+        type : String
+        
     },
 
     question : {
@@ -51,5 +54,6 @@ const questionSchema = new mongoose.Schema({
 })
 
 const Question = mongoose.model('questions', questionSchema)
+
 
 module.exports = Question

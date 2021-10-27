@@ -36,12 +36,13 @@
             </div>
         </div>
         </div>
+        
     </nav>
 </header>
 <br>
 <main class="flex justify-center items-center">
 
-    <h1 class="sm:text-4xl text-5xl font-medium title-font mb-2 text-gray-900">View all Question </h1>
+    <h1 class="sm:text-4xl text-5xl font-medium title-font mb-2 text-gray-900">View all Question <%-Ename%></h1>
 </main>
 <div class="bottomNav fixed bottom-0 w-full">
     <nav style="border:1px solid blue" class="md:hidden bottom-0 w-full bg-gray-700 text-xs">
@@ -53,34 +54,51 @@
 
 <body bgcolor="#D3D3D3">
 
-    <div class="flex justify-between  ">
-        <a href="/questions"><button class="bg-gray-700 hover:bg-blue-light text-white font-bold py-2 px-4 border-b-4 border-gray-dark hover:border-black rounded" type="submit">
+    <div class="flex items-center justify-around  ">
+        
+        <button class="bg-gray-700 hover:bg-blue-light text-white font-bold py-2 px-4 border-b-4 border-gray-dark hover:border-black rounded" type="submit">
             Add a new Question
-        </button></a>
+        </button>
+    <
+        <form method="POST" action="/del">
+           
+                
+                <button class="px-4 py-2 rounded text-white inline-block shadow-lg bg-blue-500 hover:bg-blue-600 focus:bg-blue-700" type="submit">Delete</button>
+                <input name="del" class="border border-2 rounded-r px-3 py-2 " type="text" placeholder=" Question Number" />
+            </form>
+            
+                <a href="/edit-question"?><button class="px-4 py-2 rounded text-white inline-block shadow-lg bg-blue-500 hover:bg-blue-600 focus:bg-blue-700" type="submit">Edit</button></a>
+                
+        
+             
+            
     </div>
    <br>
     <br>
     <div class="flex items-center justify-center">
 
-    <h1 class="sm:text-3xl text-5xl font-medium title-font mb-2 text-gray-900"> Questions </h1>
+    
     </div>
-    <div class="flex items-center justify-center">
+    <div class="flex items-center justify-between">
     
     <br>
+    <% var num=1 %>
+
+    <%quslist.forEach((Q)=> {%>
     <div class="bg-white rounded md:w-full border shadow-lg">
         <div class="rounded-t bg-teal-500">
-          <div class="relative py-3 px-2 flex">
-            <span class="font-semibold text-blue md:text-base text-sm">Question 1 &nbsp; &nbsp; </span>
-            <p>qus</p>
-            
+         
+            <span class="font-semibold text-blue md:text-base text-sm">Question-<%- num %> &nbsp; &nbsp; </span>
+            <h1><%- Q.question %></h1>
+            <br>
           </div>
         </div>
         </div>
-        
-        <div class="flex items-center justify-around">
-            <button class="px-4 py-2 rounded text-white inline-block shadow-lg bg-blue-500 hover:bg-blue-600 focus:bg-blue-700" type="submit">Delete</button>
-            <a href="/edit-question"?><button class="px-4 py-2 rounded text-white inline-block shadow-lg bg-blue-500 hover:bg-blue-600 focus:bg-blue-700" type="submit">Edit</button></a>
-          </div>
+        <% num++ %>
+                <%})%>
+                <br>
+              
+          
     <br>
     <br>
    </div>

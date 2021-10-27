@@ -1,2 +1,3 @@
-const qes = require("./MCQ")
+const { qes} = require("./MCQ")
+
 console.log(qes)

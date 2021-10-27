@@ -6,8 +6,8 @@ const questionSchema = new mongoose.Schema({
         type: Number, 
         default: 0 
     },
-    exam_name : {
-        type : String
+    exam_id : {
+        type: mongoose.Types.ObjectId
         
     },
 

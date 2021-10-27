@@ -4,6 +4,8 @@ const Question = require('./models/question.js')
 const exam = require('./models/exams.js')
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
+const mongoose = require('mongoose')
+
 const app = express()
 const ejs = require('ejs')
 const bcrypt = require('bcrypt')
@@ -134,8 +136,11 @@ app.post('/profile', (req, res) => {
 })
 
 app.post('/questions', (req, res) => {
-    var num = 0
-    console.log(req.query.E_name)
+    console.log(req.body.ename,"hjk")
+    exam.findOne({exam_name : req.body.ename}, (err, E) => {
+        console.log(E,"gfgd")
+        console.log(E._id,"gfgd")
+    
     const qus = new Question({
         question: req.body.question,
         option_1: req.body.option1,
@@ -144,18 +149,25 @@ app.post('/questions', (req, res) => {
         option_4: req.body.option4,
         answer: req.body.answer,
         No :  req.body.No,
-        exam_name : req.query.E_name
+        exam_id : mongoose.Types.ObjectId(E._id)
+
+        
       
     })
+
     qus.save().then(() => {
-    num=num+1
-        res.redirect('/view-questions')
+    
+       res.redirect('/view-questions')
 
     }).catch((e) => {
         console.log(e)
         res.send(e)
 
     })
+    if(err){
+        res.send("Exam not Exists")
+    }
+})
 })
 
 app.get('/dashboard', (req, res) => {
@@ -228,8 +240,9 @@ app.get('/new_exam', (req, res) => {
 
 })
  app.get('/questions', (req, res) => {
+    console.log(req.query.E_name)
      if (req.session.userId) {
-         res.render('create-questions.ejs')
+         res.render('create-questions.ejs', {ename : req.query.E_name})
      } else {
          res.redirect('/');
      }
@@ -237,6 +250,8 @@ app.get('/new_exam', (req, res) => {
  })
 app.get('/test', async (req, res) => {
    // if (req.session.userId) {
+
+
         Question.find({ is_deleted: false }, (err, qus) => {
            
             console.log(qus[1],"gfsg")
@@ -285,18 +300,17 @@ app.get('/edit-question', (req, res) => {
 app.get('/view-questions', (req, res) => {
     if (req.session.userId) {
         console.log(req.query.E_name)
-        
-        Question.find({ is_deleted: false }, (err, qus) => {
+        exam.findOne({exam_name : req.query.E_name}, (err, E) => {
+        Question.find({ is_deleted: false ,exam_id :  mongoose.Types.ObjectId(E._id)}, (err, qus) => {
            
            
           
             res.render('view-all-question.ejs', {quslist : qus, Ename : req.query.E_name})
-            if (err) {
-                res.send(err)
-            }
+            
            
             
         })
+    })
        
     } else {
         res.redirect('/');
@@ -325,7 +339,9 @@ app.post('/new_exam', (req, res) => {
         const Exam = new exam({
             exam_name: req.body.name,
             
-            exam_date: req.body.date.toString()
+            exam_date: req.body.date.toString(),
+
+            user_id : req.session.userId
 
         })
         Exam.save().then(() => {

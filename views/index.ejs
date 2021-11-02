@@ -49,7 +49,7 @@
 </div>
 
 <body>
-    <form>
+    <form >
         <% var num=1 %>
             <% var opt=1 %>
                 
@@ -97,8 +97,8 @@
                                         Exit
                                     </button>
                                     <button
-                                        class="bg-black hover:bg-gray-500 text-white font-bold py-2 w-1/6 border-b-4 border-blue-dark hover:border-blue rounded"
-                                        type="submit">
+                                        onclick=" return test()" class="bg-black hover:bg-gray-500 text-white font-bold py-2 w-1/6 border-b-4 border-blue-dark hover:border-blue rounded"
+                                        type="button" >
                                         Submit
                                     </button>
                                 </div>
@@ -109,31 +109,47 @@
     <h1><%-answer[1]%></h1>
     <script>
         var marks = 0
-        var num = "<%= quslist.length %>"
-        var quslist = []
-        //quslist = <%- JSON.parse(answer) %>
+        var num = <%= quslist.length %>
+
+        var answer = '<%-answer%>'
+        var ans = answer.replace(/\D/g, '')
+        var anslist = []
+        for(var a = num-1; a >= 0;a--)
+        {
+           anslist[a] = Math.round(ans%10)
+           ans = ans/10
+        }
+
+        console.log(anslist,"gfjh",num)
+
+
+
+
+      function test(e) {
+         
+        for(var i = 1 ;i < num+1;i++)
+            {
+            for(var j=1;j<=4;j++){
+                var radioname = 'radio_'+i+'_'+j
+                
+                console.log(radioname)
+                var ele = document.getElementById(radioname)
+            
+                if(ele.checked && j == anslist[i-1])
+                {
+                    marks=marks+1;
+                }
+               
+            }
+               
+           console.log(marks)
+        }
         
 
-        console.log(quslist,"gfjh")
-
-        var form = document.querySelector("form")
-        form.addEventListener("submit", function (event) {
-            for(var i = 1 ;i<= num;i++)
-            {
-                var radioame = 'sfg'+i
-                var ele = document.getElementsByName(radioame)
-                for(var j=1;j<=ele.length;j++)
-                {
-                    if(ele[j].checked == quslist[j].answer)
-                    {
-                        marks+=1
-                        return marks
-                    }   
-                }
-            }
-            
-
-        })
+    }
+        
+    
+       
     </script>
 </body>
 

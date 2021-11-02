@@ -136,11 +136,7 @@ app.post('/profile', (req, res) => {
 })
 
 app.post('/questions', (req, res) => {
-    console.log(req.body.ename,"hjk")
-    exam.findOne({exam_name : req.body.ename}, (err, E) => {
-        console.log(E,"gfgd")
-        console.log(E._id,"gfgd")
-    
+    console.log(req.body.Eid,"hjk")  
     const qus = new Question({
         question: req.body.question,
         option_1: req.body.option1,
@@ -149,7 +145,7 @@ app.post('/questions', (req, res) => {
         option_4: req.body.option4,
         answer: req.body.answer,
         No :  req.body.No,
-        exam_id : mongoose.Types.ObjectId(E._id)
+        exam_id : mongoose.Types.ObjectId(req.body.Eid)
 
         
       
@@ -157,17 +153,15 @@ app.post('/questions', (req, res) => {
 
     qus.save().then(() => {
     
-       res.redirect('/view-questions')
+     res.redirect('/view-questions?Eid='+req.body.Eid)
 
     }).catch((e) => {
         console.log(e)
         res.send(e)
 
     })
-    if(err){
-        res.send("Exam not Exists")
-    }
-})
+    
+
 })
 
 app.get('/dashboard', (req, res) => {
@@ -240,9 +234,9 @@ app.get('/new_exam', (req, res) => {
 
 })
  app.get('/questions', (req, res) => {
-    console.log(req.query.E_name)
+    console.log(req.query.Eid)
      if (req.session.userId) {
-         res.render('create-questions.ejs', {ename : req.query.E_name})
+         res.render('create-questions.ejs', {Eid : req.query.Eid})
      } else {
          res.redirect('/');
      }
@@ -299,20 +293,26 @@ app.get('/edit-question', (req, res) => {
 })
 app.get('/view-questions', (req, res) => {
     if (req.session.userId) {
-        console.log(req.query.E_name)
-        exam.findOne({exam_name : req.query.E_name}, (err, E) => {
-        Question.find({ is_deleted: false ,exam_id :  mongoose.Types.ObjectId(E._id)}, (err, qus) => {
-           
-           
+        console.log(req.query.Eid,"gugk")
+        
+            if(req.query.E_name){
+                exam.findOne({exam_name : req.query.E_name}, (err, E) => {
+                    Question.find({ is_deleted: false , exam_id : E._id}, (err, qus) => {
+                    res.render('view-all-question.ejs', {quslist : qus, Eid : E._id})
+                      
+                })
+                })
+            }
+            if(req.query.Eid)
+            {
+        Question.find({ is_deleted: false , exam_id : req.query.Eid}, (err, qus) => {
+            res.render('view-all-question.ejs', {quslist : qus, Eid : req.query.Eid})
           
-            res.render('view-all-question.ejs', {quslist : qus, Ename : req.query.E_name})
-            
-           
-            
-        })
     })
+}
+}
        
-    } else {
+    else {
         res.redirect('/');
     }
 

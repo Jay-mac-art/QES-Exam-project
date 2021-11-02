@@ -50,7 +50,7 @@ router.get('/StudentExam',(req, res) => {
       router.post('/del', (req, res) => {
     
         console.log( req.body.del)
-        Question.findOneAndUpdate({ is_deleted : false , No : req.body.del},{$set : {is_deleted : true}},{ new: true } ,(err, user) => {
+        Question.findOneAndUpdate({ is_deleted : false , No : req.body.del , exam_id : req.query.Eid},{$set : {is_deleted : true}},{ new: true } ,(err, user) => {
             
             res.redirect('/view-questions')
         })
@@ -61,7 +61,7 @@ router.get('/StudentExam',(req, res) => {
        
         
      
-        Question.findOneAndUpdate({  No : req.body.No},{$set : {question : req.body.question , answer : req.body.question , option_1 : req.body.option1 , option_2 : req.body.option2 , option_3 : req.body.option3, option_4 : req.body.option4 }},{ new: true } ,(err, user) => {
+        Question.findOneAndUpdate({  No : req.body.No , exam_id : req.query.Eid },{$set : {question : req.body.question , answer : req.body.question , option_1 : req.body.option1 , option_2 : req.body.option2 , option_3 : req.body.option3, option_4 : req.body.option4 }},{ new: true } ,(err, user) => {
          
             res.redirect('/view-questions')
         })

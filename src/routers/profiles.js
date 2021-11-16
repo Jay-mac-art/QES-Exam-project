@@ -49,10 +49,11 @@ router.get('/StudentExam',(req, res) => {
                
       router.post('/del', (req, res) => {
     
-        console.log( req.body.del)
-        Question.findOneAndUpdate({ is_deleted : false , No : req.body.del , exam_id : req.query.Eid},{$set : {is_deleted : true}},{ new: true } ,(err, user) => {
+      console.log(req.body.Eid,"hey")
+        
+        Question.findOneAndUpdate({ is_deleted : false , No : req.body.del , exam_id : req.body.Eid},{$set : {is_deleted : true}},{ new: true } ,(err, user) => {
             
-            res.redirect('/view-questions')
+            res.redirect('/view-questions?Eid='+req.body.Eid)
         })
         
     })
@@ -61,12 +62,16 @@ router.get('/StudentExam',(req, res) => {
        
         
      
-        Question.findOneAndUpdate({  No : req.body.No , exam_id : req.query.Eid },{$set : {question : req.body.question , answer : req.body.question , option_1 : req.body.option1 , option_2 : req.body.option2 , option_3 : req.body.option3, option_4 : req.body.option4 }},{ new: true } ,(err, user) => {
+        Question.findOneAndUpdate({  No : req.body.No , is_deleted : false, exam_id : req.query.Eid },{$set : {question : req.body.question , answer : req.body.answer , option_1 : req.body.option1 , option_2 : req.body.option2 , option_3 : req.body.option3, option_4 : req.body.option4 }},{ new: true } ,(err, user) => {
          
-            res.redirect('/view-questions')
+            res.redirect('/view-questions?Eid='+req.query.Eid)
         })
      })
      
      
-
+     
+   //  router.get("/result", (req, res) => {
+    //     res.render('mcq.ejs')
+    // })
+     
  module.exports = router

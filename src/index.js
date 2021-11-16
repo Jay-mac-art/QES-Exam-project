@@ -2,6 +2,7 @@ const express = require('express')
 const profile = require('./models/profile.js')
 const Question = require('./models/question.js')
 const exam = require('./models/exams.js')
+const result = require('./models/result.js')
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
 const mongoose = require('mongoose')
@@ -86,13 +87,16 @@ app.post('/register', (req, res) => {
         email: req.body.email,
         mobile: req.body.mobile,
         address: req.body.address,
-        password: '@'+md5(req.body.password)
+        password: req.body.password
     })
+    //'@'+md5(req.body.password)
     const cnfpass = req.body.cnfpass
     if (cnfpass === req.body.password) {
 
         user.save().then(() => {
-
+            profile.findOneAndUpdate({  email : req.body.email},{$set : {password : '@'+md5(req.body.password) }},{ new: true } ,(err, user) => {
+                console.log(user)
+            })
             res.redirect('/')
 
         }).catch((e) => {
@@ -104,6 +108,7 @@ app.post('/register', (req, res) => {
     else {
         res.send("password and confirm password should be same")
     }
+    
 
 })
 
@@ -243,10 +248,15 @@ app.get('/new_exam', (req, res) => {
 
  })
 app.get('/test', async (req, res) => {
-   // if (req.session.userId) {
+ if (req.session.userId) {
 
 
-        Question.find({ is_deleted: false }, (err, qus) => {
+         exam.findOne({exam_name : req.query.E_name}, (err, exm) => {
+             if(exm == null){
+                 res.send("Invalid Exam entry")
+             }
+             else{
+        Question.find({ is_deleted: false, exam_id : exm._id}, (err, qus) => {
            
             console.log(qus[1],"gfsg")
            
@@ -263,26 +273,40 @@ app.get('/test', async (req, res) => {
            
             
         })
+    }
+    })
 
-   // } else {
-     //   res.redirect('/');
-   // }
+
+   } else {
+       res.redirect('/');
+    }
 
 })
-// app.post('/test', (req, res) => {
-//     if (req.session.userId) {
-//         Question.find({}, (error, qus) => {
+ app.post('/test', (req, res) => {
+  if (req.session.userId) {
+    
+      console.log(req.body.result)
+      const marks = new result({
+          num : req.body.result,
+          exam_name : req.query.E_name,
+          user_id : req.session.userId
 
-//             console.log(qus)
-//             res.render('index.ejs', qus)
+      })
 
-//         })
-//     } else {
-//         res.redirect('/');
-//     }
+      marks.save()
+      
+   profile.findOne({  _id : req.session.userId}, (err, pro) => {
+       console.log(pro)
+    res.render('mcq.ejs',{numb : req.body.result , user : pro.name , test : req.query.E_name , time : marks.createdAt })
+   })
+      
+      
+ } else {
+        res.redirect('/');
+         }
 
 
-//})
+})
 app.get('/edit-question', (req, res) => {
     if (req.session.userId) {
         res.render('edit-questions.ejs')
@@ -293,7 +317,7 @@ app.get('/edit-question', (req, res) => {
 })
 app.get('/view-questions', (req, res) => {
     if (req.session.userId) {
-        console.log(req.query.Eid,"gugk")
+        console.log(req.query.E_name,"gugk")
         
             if(req.query.E_name){
                 exam.findOne({exam_name : req.query.E_name}, (err, E) => {
@@ -381,6 +405,18 @@ app.get('/StudentExam', (req, res) => {
         exam.find({ is_deleted: false , exam_status : true }, (error, exam) => {
 
             res.render('Student-exam.ejs', { examlist: exam })
+        })
+    //} else {
+      //  res.redirect('/');
+   // }
+
+})
+app.post('/StudentExam', (req, res) => {
+    //if (req.session.userId) {
+        console.log(req.body.Exam_name)
+        exam.find({ exam_name : req.body.Exam_name }, (error, exam) => {
+
+            res.redirect('/Test'+"?E_name="+req.body.Exam_name)
         })
     //} else {
       //  res.redirect('/');
